@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Detect News – TruthLens AI Misinformation Detection</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark text-light">
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-lg-0 px-lg-5 sticky-top border-bottom border-secondary">
+        <a href="index.html" class="navbar-brand ms-4 ms-lg-0 d-flex align-items-center">
+            <i class="fa fa-shield-alt text-primary fa-2x me-2"></i>
+            <div>
+                <h2 class="text-primary m-0 fw-bold">TruthLens</h2>
+                <small class="text-light" style="font-size: 0.65rem; letter-spacing: 2px;">AI VERIFICATION</small>
+            </div>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav mx-auto p-4 p-lg-0">
+                <a href="index.html" class="nav-item nav-link">HOME</a>
+                <a href="detect.html" class="nav-item nav-link active">DETECT NEWS</a>
+                <a href="dataset.html" class="nav-item nav-link">BATCH DATASET</a>
+                <a href="how-it-works.html" class="nav-item nav-link">HOW IT WORKS</a>
+                <a href="about.html" class="nav-item nav-link">ABOUT</a>
+                <a href="history.html" class="nav-item nav-link">HISTORY</a>
+            </div>
+            <div class="d-none d-lg-flex align-items-center">
+                <a href="history.html" class="btn btn-outline-warning rounded-pill py-2 px-4 me-2">
+                    <i class="fa fa-history me-1"></i> PAST ANALYSES
+                </a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid py-5 bg-dark border-bottom border-secondary mb-5" style="background: linear-gradient(rgba(18, 14, 12, 0.9), rgba(18, 14, 12, 0.95)), url('img/carousel-1.jpg') center/cover;">
+        <div class="container text-center py-4">
+            <p class="text-primary text-uppercase mb-2">// Natural Language Processing Engine</p>
+            <h1 class="display-4 text-light fw-bold mb-3">Detect News &amp; Claims</h1>
+            <p class="text-muted fs-5 mx-auto" style="max-width: 650px;">
+                Input full text, URLs, headlines, or claims. Our AI decomposes claims, measures sensationalism, and queries verified knowledge bases.
+            </p>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Detection Workbench Start -->
+    <div class="container pb-6" id="detectArea">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <!-- Quick Test Sample Chips -->
+                <div class="mb-4 text-center">
+                    <small class="text-muted d-block mb-2"><i class="fa fa-lightbulb text-primary me-1"></i>Select from Preloaded Benchmark Test Cases:</small>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        <span class="sample-chip" data-type="claim" data-text="Scientists have discovered a single miracle medicine that can cure every type of cancer in 24 hours.">
+                            Cancer Cure Miracle Claim
+                        </span>
+                        <span class="sample-chip" data-type="headline" data-text="Secret government weather machines are steering category 5 hurricanes into specific voting districts to change election outcomes.">
+                            Weather Machine Steering
+                        </span>
+                        <span class="sample-chip" data-type="article" data-text="Government announces a new national education policy framework starting next month with enhanced digital literacy and STEM programs.">
+                            Government Education Policy
+                        </span>
+                        <span class="sample-chip" data-type="article" data-text="NASA James Webb Space Telescope spectroscopic analysis detected atmospheric water vapor and carbon molecules on exoplanet K2-18b.">
+                            NASA JWST Discovery
+                        </span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <span class="text-muted small"><i class="fa fa-sliders-h text-primary me-1"></i>Select Verification Mode:</span>
+                    <div class="d-flex gap-2">
+                        <a href="dataset.html" class="btn btn-sm btn-outline-warning rounded-pill px-3 py-1">
+                            <i class="fa fa-file-csv me-1"></i> BATCH DATASET UPLOAD
+                        </a>
+                        <button type="button" id="btnToggleCompareMode" class="btn btn-sm btn-outline-warning rounded-pill px-3 py-1">
+                            <i class="fa fa-columns me-1"></i> SIDE-BY-SIDE COMPARISON
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Single Article / URL Workbench -->
+                <div id="singleModeWorkbench" class="bg-dark p-4 p-md-5 rounded-3 border border-secondary shadow-lg">
+                    <!-- Input Type Selector Pills -->
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button" class="input-type-btn active" data-type="article">
+                                <i class="fa fa-newspaper me-1"></i> Article
+                            </button>
+                            <button type="button" class="input-type-btn" data-type="headline">
+                                <i class="fa fa-heading me-1"></i> Headline
+                            </button>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <label class="text-muted small mb-0"><i class="fa fa-globe text-primary me-1"></i>Language:</label>
+                            <select id="languageSelect" class="form-select form-select-sm bg-dark text-light border-secondary" style="width: 140px;">
+                                <option value="English" selected>English ▼</option>
+                                <option value="Spanish">Spanish</option>
+                                <option value="French">French</option>
+                                <option value="German">German</option>
+                                <option value="Hindi">Hindi</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Content Input -->
+                    <div id="textInputContainer" class="mb-4">
+                        <textarea id="newsInputContent" rows="7" class="form-control bg-transparent text-light border-secondary" placeholder="Paste news article, headline or claim here..."></textarea>
+                    </div>
+
+                    <div id="urlInputContainer" class="mb-4 d-none">
+                        <label class="form-label text-primary fw-bold"><i class="fa fa-globe me-2"></i>Enter News Article URL:</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark text-muted border-secondary"><i class="fa fa-link"></i></span>
+                            <input type="url" id="newsInputUrl" class="form-control bg-transparent text-light border-secondary" placeholder="https://example.com/news/article">
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            The system validates the URL, extracts title, author, publisher, publication date, and body content for verification.
+                        </small>
+                    </div>
+
+                    <!-- Media & File Upload Container -->
+                    <div id="fileUploadWorkbenchContainer" class="mb-4 d-none">
+                        <div class="dropzone-box position-relative text-center p-4 rounded-3" style="border: 2px dashed rgba(234, 166, 54, 0.5); background: rgba(255,255,255,0.02);">
+                            
+                            <!-- Invisible overlay file input covering the entire box for 100% native mobile & desktop clicks -->
+                            <input type="file" id="workbenchFileInput" accept="image/*,.png,.jpg,.jpeg,.webp,.pdf,.txt,.csv,.json,.jsonl,.xlsx,.xls,.tsv"
+                                   style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;"
+                                   title="Tap or click to upload photo from phone gallery or files">
+
+                            <!-- Explicit inputs for label targets -->
+                            <input type="file" id="workbenchGalleryInput" accept="image/*" class="d-none">
+                            <input type="file" id="workbenchDocInput" accept=".pdf,.txt,.csv,.json,.jsonl,.xlsx,.xls,.tsv" class="d-none">
+
+                            <div id="wbUploadPrompt">
+                                <div class="mb-3">
+                                    <i class="fa fa-camera-retro text-primary fa-3x me-3"></i>
+                                    <i class="fa fa-file-image text-warning fa-3x"></i>
+                                </div>
+                                <h5 class="text-light mb-1" id="wbFileLabel">Tap or Click to Select from Phone Gallery or Laptop</h5>
+                                <p class="text-muted small mb-4">Upload news screenshots, photos of newspaper clippings, or PDF/TXT files to extract and check if <strong>FAKE</strong>, <strong>REAL</strong>, or <strong>UNVERIFIED</strong>.</p>
+
+                                <div class="d-flex flex-wrap justify-content-center gap-3" style="position: relative; z-index: 20;">
+                                    <label for="workbenchGalleryInput" class="btn btn-warning rounded-pill px-4 py-2 fw-bold text-dark shadow" style="cursor: pointer;">
+                                        <i class="fa fa-images me-2"></i> Phone Gallery / Photos
+                                    </label>
+                                    <label for="workbenchDocInput" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold" style="cursor: pointer;">
+                                        <i class="fa fa-file-pdf me-2"></i> Browse Documents (PDF, TXT)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Preview & Extracted Text Card (Populated when user picks a photo) -->
+                            <div id="wbFilePreviewCard" class="d-none mt-3 text-start">
+                                <div class="row align-items-center g-3">
+                                    <div class="col-md-4 text-center">
+                                        <img id="wbThumbImg" src="" alt="Screenshot Preview" class="img-fluid rounded border border-warning" style="max-height: 220px; object-fit: contain;">
+                                        <div class="mt-2">
+                                            <span id="wbBadgeFilename" class="badge bg-secondary">photo.png</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <label class="text-primary fw-bold small"><i class="fa fa-font me-1"></i> Extracted News Text (OCR):</label>
+                                            <span class="badge bg-success"><i class="fa fa-check me-1"></i>Ready to Verify</span>
+                                        </div>
+                                        <textarea id="wbExtractedTextReview" rows="5" class="form-control bg-dark text-light border-secondary small" placeholder="Extracted text will appear here..."></textarea>
+                                        <small class="text-muted">You can edit or refine the extracted text before verifying if needed.</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-2">
+                        <button type="button" id="mainAnalyzeBtn" class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow">
+                            <i class="fa fa-microchip me-2"></i> ANALYZE NEWS
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Side-by-Side Comparison Workbench (Hidden by default) -->
+                <div id="compareModeWorkbench" class="bg-dark p-4 p-md-5 rounded-3 border border-secondary shadow-lg d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h4 class="text-primary m-0"><i class="fa fa-balance-scale me-2"></i>Side-by-Side Credibility Comparison</h4>
+                            <small class="text-muted">Compare two articles or competing reports covering the same event</small>
+                        </div>
+                        <span class="badge bg-dark border border-secondary text-primary">OBJECTIVITY DELTA</span>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label text-light fw-bold"><i class="fa fa-newspaper text-primary me-2"></i>Source A (e.g., Primary News Source)</label>
+                            <input type="text" id="compareTitleA" class="form-control bg-transparent text-light border-secondary mb-2" placeholder="Title / Source Name A (e.g. Wire Report)">
+                            <textarea id="compareTextA" rows="8" class="form-control bg-transparent text-light border-secondary" placeholder="Paste article or claim text from Source A..."></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-light fw-bold"><i class="fa fa-newspaper text-warning me-2"></i>Source B (e.g., Competing / Viral Report)</label>
+                            <input type="text" id="compareTitleB" class="form-control bg-transparent text-light border-secondary mb-2" placeholder="Title / Source Name B (e.g. Viral Post)">
+                            <textarea id="compareTextB" rows="8" class="form-control bg-transparent text-light border-secondary" placeholder="Paste article or claim text from Source B..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="button" id="executeCompareBtn" class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow">
+                            <i class="fa fa-balance-scale me-2"></i> COMPARE CREDIBILITY &amp; BIAS
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Comparison Results Area -->
+                <div id="compareResultsArea" class="mt-5 d-none">
+                    <div class="verdict-banner mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                            <h5 class="text-primary m-0"><i class="fa fa-award me-2"></i>COMPARATIVE VERDICT</h5>
+                            <span id="compWinnerBadge" class="badge bg-primary text-dark fw-bold px-3 py-2">MORE OBJECTIVE</span>
+                        </div>
+                        <p id="compVerdictText" class="text-light mb-0 fs-6"></p>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="compare-panel text-center">
+                                <h5 id="compTitleA" class="text-primary mb-3">Article A</h5>
+                                <div id="compCircleA" class="compare-score-circle">--</div>
+                                <div class="text-muted small text-uppercase mb-3">Credibility Probability</div>
+                                <table class="table table-sm table-dark border-0 small text-start">
+                                    <tbody>
+                                        <tr><td class="text-muted">Sensationalism:</td><td id="compSensA" class="fw-bold">--</td></tr>
+                                        <tr><td class="text-muted">Clickbait Index:</td><td id="compClickA" class="fw-bold">--</td></tr>
+                                        <tr><td class="text-muted">Tone Sentiment:</td><td id="compSentA" class="fw-bold">--</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="compare-panel text-center">
+                                <h5 id="compTitleB" class="text-warning mb-3">Article B</h5>
+                                <div id="compCircleB" class="compare-score-circle">--</div>
+                                <div class="text-muted small text-uppercase mb-3">Credibility Probability</div>
+                                <table class="table table-sm table-dark border-0 small text-start">
+                                    <tbody>
+                                        <tr><td class="text-muted">Sensationalism:</td><td id="compSensB" class="fw-bold">--</td></tr>
+                                        <tr><td class="text-muted">Clickbait Index:</td><td id="compClickB" class="fw-bold">--</td></tr>
+                                        <tr><td class="text-muted">Tone Sentiment:</td><td id="compSentB" class="fw-bold">--</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Loading & Processing Overlay Area -->
+        <div id="analysisLoadingArea" class="row justify-content-center mt-5 d-none">
+            <div class="col-lg-8">
+                <div class="processing-box">
+                    <div class="spinner-border text-primary mb-4" style="width: 3.5rem; height: 3.5rem;" role="status"></div>
+                    <h4 class="text-light mb-1" id="processingStateTitle">ANALYZING CONTENT</h4>
+                    <p class="text-primary fs-5 mb-4" id="processingStatusMessage">Extracting claims...</p>
+                    
+                    <div class="progress mb-4" style="height: 8px; background: #251c18;">
+                        <div id="processingProgressBar" class="progress-bar bg-warning progress-bar-striped progress-bar-animated" style="width: 25%;"></div>
+                    </div>
+
+                    <div class="d-flex flex-wrap justify-content-center gap-2 small text-muted">
+                        <span class="badge bg-dark border border-secondary p-2">RECEIVED</span>
+                        <span class="badge bg-dark border border-secondary p-2">EXTRACTING</span>
+                        <span class="badge bg-dark border border-secondary p-2">PREPROCESSING</span>
+                        <span class="badge bg-dark border border-secondary p-2">CLAIM_EXTRACTION</span>
+                        <span class="badge bg-dark border border-secondary p-2">SOURCE_CHECK</span>
+                        <span class="badge bg-dark border border-secondary p-2">FACT_CHECK</span>
+                        <span class="badge bg-dark border border-secondary p-2">ML_ANALYSIS</span>
+                        <span class="badge bg-dark border border-secondary p-2">EVIDENCE_ANALYSIS</span>
+                        <span class="badge bg-dark border border-secondary p-2">FINALIZING</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complete Results Display Area -->
+        <div id="analysisResultsArea" class="row justify-content-center mt-5 d-none">
+            <div class="col-lg-11">
+                
+                <!-- Large Result Card -->
+                <div class="result-card-main mb-4">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                        <div>
+                            <small class="text-muted text-uppercase tracking-wider">ANALYSIS RESULT</small>
+                            <div class="mt-2">
+                                <span id="resClassificationBadge" class="badge-classification badge-misleading">
+                                    <i class="fa fa-exclamation-triangle"></i> MISLEADING
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <div class="d-flex align-items-center justify-content-end gap-3 mb-2">
+                                <div class="text-end">
+                                    <small class="text-muted d-block">CONFIDENCE</small>
+                                    <h3 class="text-primary m-0 fw-bold" id="resConfidenceScore">78%</h3>
+                                </div>
+                                <div style="width: 140px;">
+                                    <div class="progress progress-truth">
+                                        <div id="resConfidenceProgressBar" class="progress-bar" style="width: 78%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="small">
+                                <span class="text-muted">Evidence Strength:</span>
+                                <span id="resEvidenceStrengthBadge" class="strength-badge strength-medium ms-1">MEDIUM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Distinction Banner -->
+                    <div class="distinction-banner mb-4">
+                        <h6 class="text-primary mb-2"><i class="fa fa-balance-scale me-2"></i>EVIDENCE-GROUNDED VERIFICATION MATRIX</h6>
+                        <div class="row g-2 small">
+                            <div class="col-md-4" id="distinctionPrediction">
+                                <b>AI Prediction:</b> MISLEADING — 78%
+                            </div>
+                            <div class="col-md-4" id="distinctionEvidence">
+                                <b>Evidence Grounding:</b> Medium-strength evidence available.
+                            </div>
+                            <div class="col-md-4" id="distinctionVerification">
+                                <b>Factual Verification:</b> Context verified, claims partly supported.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-warning" onclick="scrollToEvidence()">
+                            <i class="fa fa-book me-1"></i> VIEW EVIDENCE
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="scrollToClaims()">
+                            <i class="fa fa-list me-1"></i> VIEW CLAIMS
+                        </button>
+                        <button type="button" id="btnDownloadPdf" class="btn btn-sm btn-primary">
+                            <i class="fa fa-file-pdf me-1"></i> DOWNLOAD REPORT
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-info" onclick="copyShareableLink()">
+                            <i class="fa fa-link me-1"></i> SHARE LINK
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-success" onclick="copyDebunkCard()">
+                            <i class="fa fa-copy me-1"></i> COPY SUMMARY
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Linguistic Manipulation Heatmap -->
+                <div class="bg-dark p-4 rounded-3 border border-secondary mb-4 d-none" id="tokenInspectorArea">
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                        <h5 class="text-primary m-0"><i class="fa fa-highlighter me-2"></i>LINGUISTIC MANIPULATION HEATMAP</h5>
+                        <div class="d-flex gap-2 flex-wrap small">
+                            <span class="badge" style="background: rgba(220,53,69,0.25); color: #ff8585; border: 1px solid #dc3545;">Sensational: <b id="countSensational">0</b></span>
+                            <span class="badge" style="background: rgba(253,126,20,0.25); color: #ffaa6b; border: 1px solid #fd7e14;">Clickbait: <b id="countClickbait">0</b></span>
+                            <span class="badge" style="background: rgba(255,193,7,0.2); color: #ffd666; border: 1px solid #ffc107;">Subjective: <b id="countSubjective">0</b></span>
+                            <span class="badge" style="background: rgba(40,167,69,0.2); color: #72f08e; border: 1px solid #28a745;">Factual Anchors: <b id="countFactual">0</b></span>
+                        </div>
+                    </div>
+                    <div class="token-container mb-2" id="annotatedTextDisplay"></div>
+                    <small class="text-muted"><i class="fa fa-info-circle me-1"></i>Colored highlights pinpoint emotional triggers, clickbait framing, subjective bias, and verifiable factual anchors.</small>
+                </div>
+
+                <!-- Dual Breakdown: Source Analysis & Content NLP Analysis -->
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-6">
+                        <div class="bg-dark p-4 rounded-3 border border-secondary h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="text-primary m-0"><i class="fa fa-newspaper me-2"></i>SOURCE ANALYSIS</h5>
+                                <span id="srcStatusBadge" class="badge bg-secondary">INFORMATIONAL</span>
+                            </div>
+                            <table class="table table-sm table-dark border-0 small mb-2">
+                                <tbody>
+                                    <tr><td class="text-muted" style="width: 35%;">Publisher:</td><td id="srcPublisher" class="fw-bold">Example News</td></tr>
+                                    <tr><td class="text-muted">Domain:</td><td id="srcDomain">example.com</td></tr>
+                                    <tr><td class="text-muted">Author:</td><td id="srcAuthor">Editorial Staff</td></tr>
+                                    <tr><td class="text-muted">Published:</td><td id="srcPublished">Recent</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="small text-muted mb-0" id="srcInfoNote">
+                                The source is one component of the assessment and should not by itself determine whether content is true or false.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="bg-dark p-4 rounded-3 border border-secondary h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="text-primary m-0"><i class="fa fa-brain me-2"></i>CONTENT NLP ANALYSIS</h5>
+                                <span class="badge bg-dark border border-secondary text-primary">BERT + LEXICAL</span>
+                            </div>
+                            <div class="row g-2 text-center small mb-3">
+                                <div class="col-4">
+                                    <div class="metric-tile">
+                                        <div class="metric-val" id="nlpSentiment">Neutral</div>
+                                        <div class="metric-label">Sentiment</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="metric-tile">
+                                        <div class="metric-val" id="nlpSubjectivity">42%</div>
+                                        <div class="metric-label">Subjectivity</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="metric-tile">
+                                        <div class="metric-val" id="nlpClickbait">Low</div>
+                                        <div class="metric-label">Clickbait</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="metric-tile">
+                                        <div class="metric-val" id="nlpSensationalism">Medium</div>
+                                        <div class="metric-label">Sensationalism</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="metric-tile">
+                                        <div class="metric-val" id="nlpLanguageQuality">91%</div>
+                                        <div class="metric-label">Language Quality</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="metric-tile">
+                                        <div class="metric-val" id="nlpSemanticMatch">84%</div>
+                                        <div class="metric-label">Semantic Match</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="text-muted">These are linguistic signals, not independent proof that a story is false.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WHY THIS RESULT? -->
+                <div class="bg-dark p-4 rounded-3 border border-secondary mb-4">
+                    <h5 class="text-primary mb-3"><i class="fa fa-question-circle me-2"></i>WHY THIS RESULT?</h5>
+                    <ul class="list-unstyled mb-0" id="explanationList"></ul>
+                </div>
+
+                <!-- Extracted Claims -->
+                <div class="bg-dark p-4 rounded-3 border border-secondary mb-4" id="claimsSectionAnchor">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-primary m-0"><i class="fa fa-bullseye me-2"></i>EXTRACTED CLAIMS</h5>
+                        <span id="claimsCountBadge" class="badge bg-secondary">0 Claims</span>
+                    </div>
+                    <div id="claimsContainer"></div>
+                </div>
+
+                <!-- Evidence Section -->
+                <div class="bg-dark p-4 rounded-3 border border-secondary mb-4" id="evidenceSectionAnchor">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-primary m-0"><i class="fa fa-search me-2"></i>FACT-CHECKING EVIDENCE</h5>
+                        <span id="evidenceCountBadge" class="badge bg-secondary">0 Sources</span>
+                    </div>
+                    <div id="evidenceContainer"></div>
+                </div>
+
+                <!-- User Feedback -->
+                <div class="feedback-box d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div id="feedbackPromptArea">
+                        <span class="text-light fw-bold me-3">Was this analysis useful?</span>
+                        <button type="button" class="btn btn-sm btn-outline-success me-2 px-3" onclick="sendFeedback(true)">
+                            <i class="fa fa-thumbs-up me-1"></i> YES
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger px-3" onclick="sendFeedback(false)">
+                            <i class="fa fa-thumbs-down me-1"></i> NO
+                        </button>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <small class="text-muted me-1">Report an issue:</small>
+                        <button type="button" class="btn btn-sm btn-outline-secondary py-1" onclick="reportIssue('WRONG_RESULT')">WRONG RESULT</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary py-1" onclick="reportIssue('MISSING_EVIDENCE')">MISSING EVIDENCE</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary py-1" onclick="reportIssue('WRONG_SOURCE')">WRONG SOURCE</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary py-1" onclick="reportIssue('UNCLEAR')">UNCLEAR</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Detection Workbench End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer mt-5 py-5 border-top border-secondary">
+        <div class="container text-center">
+            <p class="mb-0 text-muted">&copy; TruthLens AI. Fake News &amp; Misinformation Detection System.</p>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/detector.js"></script>
+</body>
+
+</html>

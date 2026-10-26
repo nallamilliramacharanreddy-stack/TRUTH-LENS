@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Analysis History – TruthLens AI Misinformation Detection</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark text-light">
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-lg-0 px-lg-5 sticky-top border-bottom border-secondary">
+        <a href="index.html" class="navbar-brand ms-4 ms-lg-0 d-flex align-items-center">
+            <i class="fa fa-shield-alt text-primary fa-2x me-2"></i>
+            <div>
+                <h2 class="text-primary m-0 fw-bold">TruthLens</h2>
+                <small class="text-light" style="font-size: 0.65rem; letter-spacing: 2px;">AI VERIFICATION</small>
+            </div>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav mx-auto p-4 p-lg-0">
+                <a href="index.html" class="nav-item nav-link">HOME</a>
+                <a href="detect.html" class="nav-item nav-link">DETECT NEWS</a>
+                <a href="dataset.html" class="nav-item nav-link">BATCH DATASET</a>
+                <a href="how-it-works.html" class="nav-item nav-link">HOW IT WORKS</a>
+                <a href="about.html" class="nav-item nav-link">ABOUT</a>
+                <a href="history.html" class="nav-item nav-link active">HISTORY</a>
+            </div>
+            <div class="d-none d-lg-flex align-items-center">
+                <a href="detect.html" class="btn btn-primary rounded-pill py-2 px-4 me-2">
+                    <i class="fa fa-plus me-1"></i> NEW ANALYSIS
+                </a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid py-5 bg-dark border-bottom border-secondary mb-5">
+        <div class="container text-center py-4">
+            <p class="text-primary text-uppercase mb-2">// Audit Records &amp; Logs</p>
+            <h1 class="display-4 text-light fw-bold mb-3">Analysis History</h1>
+            <p class="text-muted fs-5 mx-auto" style="max-width: 650px;">
+                Review past evaluations, inspect claims, view evidence relationships, or download detailed PDF verification reports.
+            </p>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- History Table Container -->
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+                <h4 class="text-light m-0"><i class="fa fa-list-alt text-primary me-2"></i>Analysis Audit Records</h4>
+                <small class="text-muted">Persisted verification logs with export &amp; filter capabilities</small>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <button id="btnExportCsv" class="btn btn-sm btn-outline-success">
+                    <i class="fa fa-file-csv me-1"></i> Export CSV
+                </button>
+                <button id="btnExportJson" class="btn btn-sm btn-outline-info">
+                    <i class="fa fa-file-code me-1"></i> Export JSON
+                </button>
+                <button id="btnClearHistory" class="btn btn-sm btn-outline-danger">
+                    <i class="fa fa-trash-alt me-1"></i> Clear Log
+                </button>
+                <button class="btn btn-sm btn-outline-warning" onclick="loadHistoryTable()">
+                    <i class="fa fa-sync-alt me-1"></i> Refresh
+                </button>
+                <a href="detect.html" class="btn btn-sm btn-primary">
+                    <i class="fa fa-plus me-1"></i> New Analysis
+                </a>
+            </div>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <div class="bg-dark p-3 rounded-3 border border-secondary mb-4">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-5">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-dark border-secondary text-primary"><i class="fa fa-search"></i></span>
+                        <input type="text" id="historySearchInput" class="form-control bg-transparent text-light border-secondary" placeholder="Search by headline, keyword, or ID (e.g. ANL-001)...">
+                    </div>
+                </div>
+                <div class="col-md-7 text-md-end">
+                    <span class="text-muted small me-2"><i class="fa fa-filter text-primary me-1"></i>Filter by:</span>
+                    <div class="d-inline-flex flex-wrap gap-1">
+                        <span class="filter-pill active" data-filter="ALL">All</span>
+                        <span class="filter-pill" data-filter="REAL">Real</span>
+                        <span class="filter-pill" data-filter="FAKE">Fake</span>
+                        <span class="filter-pill" data-filter="MISLEADING">Misleading</span>
+                        <span class="filter-pill" data-filter="UNVERIFIED">Unverified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive shadow-sm">
+            <table class="table history-table align-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 14%;">Date</th>
+                        <th style="width: 10%;">Type</th>
+                        <th style="width: 44%;">Title / Analysis ID</th>
+                        <th style="width: 12%;">Classification</th>
+                        <th style="width: 8%;">Confidence</th>
+                        <th style="width: 12%;" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                    <!-- Populated dynamically by detector.js -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Inline Details Container when VIEW is clicked -->
+        <div id="analysisResultsArea" class="mt-5 d-none">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="text-primary m-0"><i class="fa fa-file-alt me-2"></i>Selected Analysis Details</h4>
+                <button class="btn btn-sm btn-outline-secondary" onclick="$('#analysisResultsArea').addClass('d-none')">
+                    <i class="fa fa-times me-1"></i> Close
+                </button>
+            </div>
+
+            <div class="result-card-main mb-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                    <div>
+                        <small class="text-muted text-uppercase tracking-wider">ANALYSIS RESULT</small>
+                        <div class="mt-2">
+                            <span id="resClassificationBadge" class="badge-classification badge-misleading">
+                                <i class="fa fa-exclamation-triangle"></i> MISLEADING
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <div class="d-flex align-items-center justify-content-end gap-3 mb-2">
+                            <div class="text-end">
+                                <small class="text-muted d-block">CONFIDENCE</small>
+                                <h3 class="text-primary m-0 fw-bold" id="resConfidenceScore">78%</h3>
+                            </div>
+                            <div style="width: 140px;">
+                                <div class="progress progress-truth">
+                                    <div id="resConfidenceProgressBar" class="progress-bar" style="width: 78%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="small">
+                            <span class="text-muted">Evidence Strength:</span>
+                            <span id="resEvidenceStrengthBadge" class="strength-badge strength-medium ms-1">MEDIUM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Distinction Banner -->
+                <div class="distinction-banner mb-4">
+                    <h6 class="text-primary mb-2"><i class="fa fa-balance-scale me-2"></i>EVIDENCE-GROUNDED VERIFICATION MATRIX</h6>
+                    <div class="row g-2 small">
+                        <div class="col-md-4" id="distinctionPrediction">
+                            <b>AI Prediction:</b> MISLEADING — 78%
+                        </div>
+                        <div class="col-md-4" id="distinctionEvidence">
+                            <b>Evidence Grounding:</b> Medium-strength evidence available.
+                        </div>
+                        <div class="col-md-4" id="distinctionVerification">
+                            <b>Factual Verification:</b> Context verified, claims partly supported.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <button type="button" id="btnDownloadPdf" class="btn btn-sm btn-primary">
+                        <i class="fa fa-file-pdf me-1"></i> DOWNLOAD REPORT
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dual Breakdown -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="bg-dark p-4 rounded-3 border border-secondary h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="text-primary m-0"><i class="fa fa-newspaper me-2"></i>SOURCE ANALYSIS</h5>
+                            <span id="srcStatusBadge" class="badge bg-secondary">INFORMATIONAL</span>
+                        </div>
+                        <table class="table table-sm table-dark border-0 small mb-2">
+                            <tbody>
+                                <tr><td class="text-muted" style="width: 35%;">Publisher:</td><td id="srcPublisher" class="fw-bold">Example News</td></tr>
+                                <tr><td class="text-muted">Domain:</td><td id="srcDomain">example.com</td></tr>
+                                <tr><td class="text-muted">Author:</td><td id="srcAuthor">Editorial Staff</td></tr>
+                                <tr><td class="text-muted">Published:</td><td id="srcPublished">Recent</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="bg-dark p-4 rounded-3 border border-secondary h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="text-primary m-0"><i class="fa fa-brain me-2"></i>CONTENT NLP ANALYSIS</h5>
+                            <span class="badge bg-dark border border-secondary text-primary">BERT + LEXICAL</span>
+                        </div>
+                        <div class="row g-2 text-center small mb-3">
+                            <div class="col-4">
+                                <div class="metric-tile">
+                                    <div class="metric-val" id="nlpSentiment">Neutral</div>
+                                    <div class="metric-label">Sentiment</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metric-tile">
+                                    <div class="metric-val" id="nlpSubjectivity">42%</div>
+                                    <div class="metric-label">Subjectivity</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metric-tile">
+                                    <div class="metric-val" id="nlpClickbait">Low</div>
+                                    <div class="metric-label">Clickbait</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metric-tile">
+                                    <div class="metric-val" id="nlpSensationalism">Medium</div>
+                                    <div class="metric-label">Sensationalism</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metric-tile">
+                                    <div class="metric-val" id="nlpLanguageQuality">91%</div>
+                                    <div class="metric-label">Language Quality</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metric-tile">
+                                    <div class="metric-val" id="nlpSemanticMatch">84%</div>
+                                    <div class="metric-label">Semantic Match</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WHY THIS RESULT? -->
+            <div class="bg-dark p-4 rounded-3 border border-secondary mb-4">
+                <h5 class="text-primary mb-3"><i class="fa fa-question-circle me-2"></i>WHY THIS RESULT?</h5>
+                <ul class="list-unstyled mb-0" id="explanationList"></ul>
+            </div>
+
+            <!-- Extracted Claims -->
+            <div class="bg-dark p-4 rounded-3 border border-secondary mb-4" id="claimsSectionAnchor">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="text-primary m-0"><i class="fa fa-bullseye me-2"></i>EXTRACTED CLAIMS</h5>
+                    <span id="claimsCountBadge" class="badge bg-secondary">0 Claims</span>
+                </div>
+                <div id="claimsContainer"></div>
+            </div>
+
+            <!-- Evidence Section -->
+            <div class="bg-dark p-4 rounded-3 border border-secondary mb-4" id="evidenceSectionAnchor">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="text-primary m-0"><i class="fa fa-search me-2"></i>FACT-CHECKING EVIDENCE</h5>
+                    <span id="evidenceCountBadge" class="badge bg-secondary">0 Sources</span>
+                </div>
+                <div id="evidenceContainer"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer py-5 border-top border-secondary mt-5">
+        <div class="container text-center">
+            <p class="mb-0 text-muted">&copy; TruthLens AI. Fake News &amp; Misinformation Detection System.</p>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/detector.js"></script>
+</body>
+
+</html>

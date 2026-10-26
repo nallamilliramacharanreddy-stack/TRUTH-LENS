@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Contact &amp; Model Support – TruthLens AI Misinformation Detection</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="TruthLens Contact, AI Model Audit, Misinformation Report, Fact-Check Inquiries" name="keywords">
+    <meta content="Contact the TruthLens AI research and development team, report classification bias, or request enterprise API developer access." name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark text-light">
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-lg-0 px-lg-5 sticky-top border-bottom border-secondary">
+        <a href="index.html" class="navbar-brand ms-4 ms-lg-0 d-flex align-items-center">
+            <i class="fa fa-shield-alt text-primary fa-2x me-2"></i>
+            <div>
+                <h2 class="text-primary m-0 fw-bold">TruthLens</h2>
+                <small class="text-light" style="font-size: 0.65rem; letter-spacing: 2px;">AI VERIFICATION</small>
+            </div>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav mx-auto p-4 p-lg-0">
+                <a href="index.html" class="nav-item nav-link">HOME</a>
+                <a href="detect.html" class="nav-item nav-link">DETECT NEWS</a>
+                <a href="dataset.html" class="nav-item nav-link">BATCH DATASET</a>
+                <a href="how-it-works.html" class="nav-item nav-link">HOW IT WORKS</a>
+                <a href="about.html" class="nav-item nav-link">ABOUT</a>
+                <a href="history.html" class="nav-item nav-link">HISTORY</a>
+            </div>
+            <div class="d-none d-lg-flex align-items-center">
+                <a href="detect.html" class="btn btn-primary rounded-pill py-2 px-4 me-2">
+                    <i class="fa fa-search me-1"></i> VERIFY NEWS
+                </a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid py-5 bg-dark border-bottom border-secondary mb-5" style="background: linear-gradient(rgba(18, 14, 12, 0.9), rgba(18, 14, 12, 0.95)), url('img/carousel-1.jpg') center/cover;">
+        <div class="container text-center py-4">
+            <p class="text-primary text-uppercase mb-2">// Inquiries &amp; Model Governance</p>
+            <h1 class="display-4 text-light fw-bold mb-3">Contact &amp; Support</h1>
+            <p class="text-muted fs-5 mx-auto" style="max-width: 650px;">
+                Submit classification audit requests, report linguistic bias, suggest fact-checking knowledge sources, or request API keys for newsroom integration.
+            </p>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Contact & Feedback Container -->
+    <div class="container py-4">
+        <div class="row g-5">
+            <!-- Left Column: Interactive Contact Form -->
+            <div class="col-lg-7">
+                <div class="bg-dark p-4 p-md-5 rounded-3 border border-secondary shadow-lg">
+                    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                        <div>
+                            <h4 class="text-primary m-0"><i class="fa fa-paper-plane me-2"></i>Send Inquiries &amp; Feedback</h4>
+                            <small class="text-muted">Directly routed to the NLP research &amp; evaluation queue</small>
+                        </div>
+                        <span class="badge bg-dark border border-secondary text-primary">LIVE INGESTION</span>
+                    </div>
+
+                    <form id="contactForm" onsubmit="submitContactFeedback(event)">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent text-light border-secondary" id="contactName" placeholder="Your Name" required>
+                                    <label for="contactName" class="text-muted">Your Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control bg-transparent text-light border-secondary" id="contactEmail" placeholder="Your Email" required>
+                                    <label for="contactEmail" class="text-muted">Email Address</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select bg-dark text-light border-secondary" id="contactInquiryType">
+                                        <option value="GENERAL_INQUIRY" selected>General Inquiry</option>
+                                        <option value="MODEL_BIAS_DISPUTE">Model Bias / Classification Dispute</option>
+                                        <option value="API_DEVELOPER_ACCESS">API Developer Access</option>
+                                        <option value="FACT_CHECK_SUBMISSION">Fact-Check Dataset Suggestion</option>
+                                        <option value="SECURITY_VULNERABILITY">Security / Vulnerability Report</option>
+                                    </select>
+                                    <label for="contactInquiryType" class="text-muted">Inquiry Category</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent text-light border-secondary" id="contactSubject" placeholder="Subject" required>
+                                    <label for="contactSubject" class="text-muted">Subject / Analysis Reference</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control bg-transparent text-light border-secondary" placeholder="Detailed message" id="contactMessage" style="height: 160px" required></textarea>
+                                    <label for="contactMessage" class="text-muted">Detailed Comments, Model Feedback or Query</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary rounded-pill py-3 px-5 fw-bold w-100" type="submit">
+                                    <i class="fa fa-envelope-open-text me-2"></i> SUBMIT INQUIRY
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="contactStatusMsg"></div>
+                </div>
+            </div>
+
+            <!-- Right Column: Support Details & API Access -->
+            <div class="col-lg-5">
+                <div class="bg-dark p-4 rounded-3 border border-secondary mb-4">
+                    <h5 class="text-primary mb-3"><i class="fa fa-code me-2"></i>Developer &amp; API Integration</h5>
+                    <p class="text-muted small mb-3">
+                        TruthLens AI provides REST endpoints for automated verification pipelines, browser extensions, and content moderation bots.
+                    </p>
+                    <div class="p-3 rounded bg-black mb-3 border border-secondary">
+                        <code class="text-warning small d-block mb-1"># Quick cURL Verification</code>
+                        <code class="text-light small">curl -X POST http://127.0.0.1:8000/api/analyze \<br>&nbsp;&nbsp;-H "Content-Type: application/json" \<br>&nbsp;&nbsp;-d '{"content": "Breaking claim..."}'</code>
+                    </div>
+                    <a href="/docs" target="_blank" class="btn btn-sm btn-outline-warning w-100">
+                        <i class="fa fa-external-link-alt me-1"></i> Open Swagger API Documentation
+                    </a>
+                </div>
+
+                <div class="bg-dark p-4 rounded-3 border border-secondary mb-4">
+                    <h5 class="text-primary mb-3"><i class="fa fa-headset me-2"></i>Research &amp; Operations Center</h5>
+                    <div class="mb-3">
+                        <small class="text-muted d-block">LAB LOCATION</small>
+                        <span class="text-light">NLP Systems Lab, AI Center of Excellence</span>
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-muted d-block">DIRECT DISPATCH EMAIL</small>
+                        <span class="text-light">contact@truthlens.ai</span>
+                    </div>
+                    <div class="mb-0">
+                        <small class="text-muted d-block">RESPONSE SLA</small>
+                        <span class="badge bg-success text-dark fw-bold">Within 24 Hours</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mt-5 pt-4 border-top border-secondary">
+            <div class="text-center mx-auto mb-5" style="max-width: 650px;">
+                <p class="text-primary text-uppercase mb-2">// Common Questions</p>
+                <h3 class="text-light">Frequently Asked Questions</h3>
+                <p class="text-muted small">Everything you need to know about our evidence-grounded AI verification architecture.</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="accordion" id="truthLensFaq">
+                        <!-- FAQ 1 -->
+                        <div class="accordion-item bg-dark border border-secondary mb-3 rounded overflow-hidden">
+                            <h2 class="accordion-header" id="faqOneHeading">
+                                <button class="accordion-button bg-dark text-light fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="true">
+                                    <i class="fa fa-brain text-primary me-2"></i> How does TruthLens AI detect fake news?
+                                </button>
+                            </h2>
+                            <div id="faqOne" class="accordion-collapse collapse show" data-bs-parent="#truthLensFaq">
+                                <div class="accordion-body text-muted small">
+                                    TruthLens uses a multi-layered pipeline: it extracts grammatical claims using syntactic analysis, scores sensationalism and clickbait patterns using lexical features and fine-tuned BERT embeddings, verifies originating publisher transparency, and cross-references assertions against public repositories such as Reuters, the Associated Press, WHO, and peer-reviewed databases.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 2 -->
+                        <div class="accordion-item bg-dark border border-secondary mb-3 rounded overflow-hidden">
+                            <h2 class="accordion-header" id="faqTwoHeading">
+                                <button class="accordion-button collapsed bg-dark text-light fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo">
+                                    <i class="fa fa-balance-scale text-primary me-2"></i> How do you distinguish machine prediction from factual verification?
+                                </button>
+                            </h2>
+                            <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#truthLensFaq">
+                                <div class="accordion-body text-muted small">
+                                    We explicitly separate the machine learning probability score (which evaluates writing style and linguistic manipulation) from the factual grounding status (which reflects whether physical or official evidence directly supports or contradicts the claim). An article can have sensational writing but still be factually true, or be calmly written while asserting completely fabricated facts.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 3 -->
+                        <div class="accordion-item bg-dark border border-secondary mb-3 rounded overflow-hidden">
+                            <h2 class="accordion-header" id="faqThreeHeading">
+                                <button class="accordion-button collapsed bg-dark text-light fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree">
+                                    <i class="fa fa-shield-alt text-primary me-2"></i> How do you mitigate political or ideological bias?
+                                </button>
+                            </h2>
+                            <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#truthLensFaq">
+                                <div class="accordion-body text-muted small">
+                                    Our models are calibrated on balanced cross-spectrum benchmark datasets (including LIAR, FEVER, and FakeNewsCorpus). Claims are evaluated against primary empirical records (government gazettes, satellite telemetry, scientific registries) rather than editorial op-eds.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 4 -->
+                        <div class="accordion-item bg-dark border border-secondary mb-3 rounded overflow-hidden">
+                            <h2 class="accordion-header" id="faqFourHeading">
+                                <button class="accordion-button collapsed bg-dark text-light fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqFour">
+                                    <i class="fa fa-file-pdf text-primary me-2"></i> Are audit reports downloadable and shareable?
+                                </button>
+                            </h2>
+                            <div id="faqFour" class="accordion-collapse collapse" data-bs-parent="#truthLensFaq">
+                                <div class="accordion-body text-muted small">
+                                    Yes! Every analysis generated receives a persistent unique Analysis ID (e.g. <code>ANL-XXXXXX</code>) stored in our SQLite database. You can export complete formal PDF verification reports, generate shareable URL links, or export your full audit log as CSV or JSON.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer mt-5 py-5 border-top border-secondary">
+        <div class="container text-center">
+            <p class="mb-0 text-muted">&copy; TruthLens AI. Fake News &amp; Misinformation Detection System. All Rights Reserved.</p>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/detector.js"></script>
+</body>
+
+</html>
